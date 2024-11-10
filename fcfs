@@ -1,0 +1,61 @@
+import java.util.Scanner;
+
+class Process {
+    int pid;            // Process ID
+    int arrivalTime;    // Arrival Time
+    int burstTime;      // Burst Time
+    int waitingTime;    // Waiting Time
+    int turnaroundTime; // Turnaround Time
+
+    Process(int pid, int arrivalTime, int burstTime) {
+        this.pid = pid;
+        this.arrivalTime = arrivalTime;
+        this.burstTime = burstTime;
+    }
+}
+
+public class FCFS_Scheduling {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the number of processes: ");
+        int n = scanner.nextInt();
+        Process[] processes = new Process[n];
+
+        // Input arrival time and burst time for each process
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter arrival time for process " + (i + 1) + ": ");
+            int arrivalTime = scanner.nextInt();
+            System.out.print("Enter burst time for process " + (i + 1) + ": ");
+            int burstTime = scanner.nextInt();
+            processes[i] = new Process(i + 1, arrivalTime, burstTime);
+        }
+
+        // Calculate waiting time and turnaround time for each process
+        int currentTime = 0;
+        for (Process p : processes) {
+            // Waiting time is the time from arrival to when it starts execution
+            p.waitingTime = Math.max(0, currentTime - p.arrivalTime);
+            // Turnaround time is the total time from arrival to completion
+            p.turnaroundTime = p.waitingTime + p.burstTime;
+            // Update current time after process completes
+            currentTime = Math.max(currentTime, p.arrivalTime) + p.burstTime;
+        }
+
+        // Display results
+        System.out.println("\nProcess\tArrival Time\tBurst Time\tWaiting Time\tTurnaround Time");
+        int totalWaitingTime = 0;
+        int totalTurnaroundTime = 0;
+        for (Process p : processes) {
+            totalWaitingTime += p.waitingTime;
+            totalTurnaroundTime += p.turnaroundTime;
+            System.out.println("P" + p.pid + "\t\t" + p.arrivalTime + "\t\t" + p.burstTime + "\t\t" + p.waitingTime + "\t\t" + p.turnaroundTime);
+        }
+
+        // Calculate and display average waiting time and turnaround time
+        System.out.println("\nAverage Waiting Time: " + (double) totalWaitingTime / n);
+        System.out.println("Average Turnaround Time: " + (double) totalTurnaroundTime / n);
+
+        scanner.close();
+    }
+}
