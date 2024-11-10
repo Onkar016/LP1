@@ -1,0 +1,77 @@
+import java.util.Scanner;
+
+class Process {
+    int id;
+    int burstTime;
+    int remainingTime;
+    int waitingTime = 0;
+    int turnAroundTime = 0;
+
+    public Process(int id, int burstTime) {
+        this.id = id;
+        this.burstTime = burstTime;
+        this.remainingTime = burstTime;
+    }
+}
+
+public class RoundRobinScheduling {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Input: Number of processes
+        System.out.print("Enter the number of processes: ");
+        int n = sc.nextInt();
+
+        // Initialize processes array
+        Process[] processes = new Process[n];
+        
+        // Input burst time for each process
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter burst time for process " + (i + 1) + ": ");
+            int burstTime = sc.nextInt();
+            processes[i] = new Process(i + 1, burstTime);
+        }
+
+        // Input: Time quantum
+        System.out.print("Enter the time quantum: ");
+        int timeQuantum = sc.nextInt();
+
+        // Round Robin scheduling logic
+        int time = 0;
+        boolean done;
+        do {
+            done = true;
+            for (Process process : processes) {
+                if (process.remainingTime > 0) {
+                    done = false; // Processes are still remaining
+                    int timeSpent = Math.min(timeQuantum, process.remainingTime);
+                    time += timeSpent;
+                    process.remainingTime -= timeSpent;
+                    
+                    if (process.remainingTime == 0) {
+                        process.turnAroundTime = time;
+                        process.waitingTime = process.turnAroundTime - process.burstTime;
+                    }
+                }
+            }
+        } while (!done);
+
+        // Display process details and calculate averages
+        System.out.println("\nProcess\tBurst Time\tWaiting Time\tTurnaround Time");
+        double totalWaitingTime = 0, totalTurnAroundTime = 0;
+
+        for (Process process : processes) {
+            System.out.println("P" + process.id + "\t\t" + process.burstTime +
+                               "\t\t" + process.waitingTime + "\t\t" + process.turnAroundTime);
+            totalWaitingTime += process.waitingTime;
+            totalTurnAroundTime += process.turnAroundTime;
+        }
+
+        // Display average waiting time and turnaround time
+        System.out.println("\nAverage Waiting Time: " + (totalWaitingTime / n));
+        System.out.println("Average Turnaround Time: " + (totalTurnAroundTime / n));
+        
+        sc.close();
+    }
+}
