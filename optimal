@@ -1,0 +1,58 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class Optimal {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        System.out.print("Enter the number of frames: ");
+        int frames = Integer.parseInt(br.readLine());
+        ArrayList<Integer> optimal = new ArrayList<>(frames);
+
+        System.out.print("Enter the number of page requests: ");
+        int numPages = Integer.parseInt(br.readLine());
+        int[] pages = new int[numPages];
+
+        System.out.println("Enter the page requests:");
+        for (int i = 0; i < numPages; i++) {
+            pages[i] = Integer.parseInt(br.readLine());
+        }
+
+        int hits = 0, faults = 0;
+
+        for (int i = 0; i < numPages; i++) {
+            int page = pages[i];
+            if (optimal.contains(page)) {
+                hits++;
+            } else {
+                faults++;
+                if (optimal.size() == frames) {
+                    // Find the page that will not be used for the longest time
+                    int farthest = -1, pageToReplace = 0;
+                    for (int p : optimal) {
+                        int nextUse = Integer.MAX_VALUE;
+                        for (int j = i + 1; j < numPages; j++) {
+                            if (pages[j] == p) {
+                                nextUse = j;
+                                break;
+                            }
+                        }
+                        if (nextUse > farthest) {
+                            farthest = nextUse;
+                            pageToReplace = p;
+                        }
+                    }
+                    optimal.remove((Integer) pageToReplace);  // Replace the farthest page
+                }
+                optimal.add(page);  // Add the new page
+            }
+        }
+
+        System.out.println("Total Hits: " + hits);
+        System.out.println("Total Faults: " + faults);
+        System.out.println("Hit Ratio: " + (float) hits / numPages);
+    }
+}
