@@ -1,0 +1,59 @@
+CPU scheduling is the process in an operating system that determines the order in which processes use the CPU. It aims to maximize CPU utilization, minimize wait times, and ensure fair and efficient execution of all processes.
+Common CPU Scheduling Algorithms
+First-Come, First-Served (FCFS): Processes are scheduled in the order they arrive.
+Shortest Job Next (SJN): Prioritizes processes with the shortest execution time.
+Round Robin (RR): Allocates CPU time in fixed time slices to each process in a rotating order, commonly used in time-sharing systems.
+Priority Scheduling: Processes are assigned a priority level, with higher-priority tasks preempting lower-priority ones.
+Multilevel Queue Scheduling: Separates processes into multiple queues based on priority or process type, scheduling each queue differently for efficient handling of various tasks.
+
+
+Paging is a memory management technique in operating systems that divides the physical memory and processes' virtual memory into fixed-sized blocks called pages (in virtual memory) and frames (in physical memory). When a program needs to run, its pages are loaded into available frames in the physical memory.
+
+Key Points:
+Logical vs. Physical Addressing: Processes use virtual (logical) addresses, which the operating system translates into physical addresses using a page table.
+Page Table: Keeps track of which virtual pages map to which physical frames.
+Benefits:
+Efficient Memory Use: Allows the OS to load only necessary pages, not the entire process, conserving memory.
+Isolation: Processes are isolated from each other in memory, increasing security and stability.
+Eliminates Fragmentation: Unlike contiguous memory allocation, paging reduces fragmentation since memory is allocated in fixed sizes.
+
+
+
+Page replacement is a memory management technique used in operating systems to manage limited physical memory when there isn’t enough space to load new pages needed by a process. When the system needs to bring in a new page and all frames are occupied, it must decide which page in memory to remove to free up space. This decision is made by a page replacement algorithm.
+
+Importance of Page Replacement
+Page replacement is essential for:
+
+Efficient Memory Use: Ensures that high-priority or frequently accessed pages remain in memory, improving performance.
+Supporting Large Applications: Allows systems to run programs that need more memory than is physically available by swapping pages in and out as needed.
+Reducing Page Faults: A good page replacement algorithm minimizes page faults (when a needed page is not in memory), which keeps the system running smoothly.
+Common Page Replacement Algorithms
+FIFO (First-In, First-Out): Replaces the oldest page in memory.
+LRU (Least Recently Used): Replaces the page that hasn't been used for the longest time, based on the assumption that recently used pages are more likely to be needed again soon.
+Optimal (OPT): Replaces the page that won’t be used for the longest time in the future (ideal but impractical in real-time systems).
+Clock: Uses a circular list of pages and a reference bit to approximate LRU, balancing efficiency and complexity.
+Page replacement helps ensure that the system can effectively manage processes and memory, improving the overall performance and responsiveness of the OS.
+
+
+
+
+
+
+Page replacement is a process used in operating systems to free up memory by swapping out an existing page when a new page needs to be loaded, but all memory is full.
+
+Common Page Replacement Algorithms:
+FIFO (First-In, First-Out): Replaces the oldest loaded page.
+LRU (Least Recently Used): Replaces the page that hasn’t been used for the longest time.
+Optimal (OPT): Replaces the page that won’t be needed for the longest time in the future.
+Clock: Uses a circular list and a reference bit to replace pages in a way similar to LRU, but more efficiently.
+These algorithms help the OS manage memory efficiently by reducing page faults.
+
+
+
+Multithreading is a technique that allows a program (or process) to perform multiple tasks at the same time by dividing it into smaller units called threads. Each thread can run independently, so the program can handle multiple operations at once, like updating the display while loading data. This makes programs faster and more responsive.
+
+Deadlock is a situation in multitasking where two or more threads or processes get stuck because they’re each waiting for the other to release resources they need to continue. Imagine two threads:
+
+Thread A holds Resource X and needs Resource Y.
+Thread B holds Resource Y and needs Resource X.
+Each thread is waiting for the other to release its resource, so they’re both “stuck,” causing a deadlock where neither can proceed.
