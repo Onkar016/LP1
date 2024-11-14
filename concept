@@ -57,3 +57,14 @@ Deadlock is a situation in multitasking where two or more threads or processes g
 Thread A holds Resource X and needs Resource Y.
 Thread B holds Resource Y and needs Resource X.
 Each thread is waiting for the other to release its resource, so they’re both “stuck,” causing a deadlock where neither can proceed.
+
+
+
+A linker is a tool that combines different pieces of code and data (often from separate files) into a single executable file. 
+It resolves symbol references (like function calls) across files, making sure all parts of the program can access the functions and variables they need.
+
+A loader is responsible for loading this executable file into memory when you run the program. 
+It allocates memory space for the program, loads the code and data, and starts the execution by pointing to the program's entry point (usually the main function).
+
+An object file is a file produced by a compiler that contains machine code for a program but isn't yet complete or executable on its own. It holds compiled code, data, and information
+about unresolved symbols (like function calls to other files) and is used by the linker to create the final executable program.
